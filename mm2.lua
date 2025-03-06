@@ -7,6 +7,7 @@ local LocalPlayer = Players.LocalPlayer
 local ESPObjects = {}
 local Murderer, Sheriff, GunDrop = nil, nil, nil
 local ESPEnabled = false
+local FARMEnabled = false
 
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Parent = game.CoreGui
@@ -145,6 +146,40 @@ local function teleportToGun()
     end
 end
 
+local function autofarm()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+
+    local function findAllCoinServers()
+        local coinServers = {}
+        for _, item in ipairs(workspace:GetDescendants()) do
+            if item.Name == "Coin_Server" then
+                table.insert(coinServers, item)
+            end
+        end
+        return coinServers
+    end
+
+
+    local function teleportToCoinServersTwice()
+        local coinServers = findAllCoinServers()
+        for _, coinServer in ipairs(coinServers) do
+            for i = 1, 2 do
+                humanoidRootPart.CFrame = coinServer.CFrame
+                wait(1)
+            end
+        end
+    end
+
+    teleportToCoinServersTwice()
+end
+
+
+
+   
+
 createButton("Toggle ESP", 40, function()
     ESPEnabled = not ESPEnabled
     if ESPEnabled then
@@ -164,6 +199,14 @@ end)
 
 createButton("Teleport to Dropped Gun", 190, function()
     teleportToGun()
+end)
+
+createButton("Toggle Auto Farm (buggy)", 340, function()
+    FARMEnabled = not FARMEnabled
+    if FARMEnabled then
+       autofarm()
+      
+    end
 end)
 
 local SearchBox = Instance.new("TextBox")
