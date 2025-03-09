@@ -1,0 +1,18 @@
+local hwids = {'70C109A3AFE329138B89A53700F62F', 'd92817d1bbe1495c9fce90cfb12026bc258960461749736a87c623722543111d', '920854629a8852289fded2b81e01d848debecc18999c10079bc48db67accc704'}
+local keys = {"key1", "key2", "key3"}
+
+local hwid = gethwid()
+
+
+local function checkMatch()
+    for i, storedHwid in ipairs(hwids) do
+        if hwid == storedHwid and key == keys[i] then
+            print("hwid and key match")
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/hxizx/mm2/refs/heads/main/mm2.lua"))()
+            return
+        end
+    end
+    print("hwid or key do not match")
+end
+
+checkMatch()
